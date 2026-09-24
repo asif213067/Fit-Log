@@ -1,6 +1,8 @@
 import React from "react";
 import Image from "next/image";
 import { IFitness } from "@/type/fitness.type";
+import { MdLocalFireDepartment, MdOutlineWatchLater } from "react-icons/md";
+import { FaRegStar } from "react-icons/fa";
 
 interface FitnessCardProps {
   fitData: IFitness;
@@ -72,51 +74,21 @@ const FitnessCard = ({ fitData }: FitnessCardProps) => {
         <div className="flex items-center gap-4 text-xs text-[#8d9199]">
           {/* Duration */}
           <div className="flex items-center gap-1.5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              className="h-4 w-4"
-            >
-              <circle cx="12" cy="12" r="9" />
-              <path strokeLinecap="round" d="M12 7v5l3 2" />
-            </svg>
+            <MdOutlineWatchLater size={16} />
 
             <span>{duration} min</span>
           </div>
 
           {/* Calories */}
           <div className="flex items-center gap-1.5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="h-4 w-4"
-            >
-              <path d="M13.5 2.5c.4 3.2-1.1 4.7-2.5 6.1-1.1 1.1-2 2-2 3.7 0 1.3.7 2.4 1.8 3.1-.1-.5 0-1.1.4-1.7.4-.7 1-1.2 1.6-1.7.3 1.5 1.7 2.3 2.3 3.6.3.6.4 1.2.3 1.8 1.1-.7 1.9-2 1.9-3.5 0-2.2-1.3-4.3-2.7-5.8-.2 1-.7 1.7-1.3 2.2.2-2.7-.6-5.3-1.8-7.8Z" />
-            </svg>
+            <MdLocalFireDepartment size={17} />
 
             <span>{caloriesBurned} kcal</span>
           </div>
 
           {/* Rating */}
           <div className="flex items-center gap-1.5">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              className="h-4 w-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"
-              />
-            </svg>
+            <FaRegStar size={15} />
 
             <span>{rating}</span>
           </div>

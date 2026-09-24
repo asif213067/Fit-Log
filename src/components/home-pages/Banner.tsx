@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import bannerImg from '@/assets/banner.png'
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const Banner = () => {
   return (
@@ -36,20 +37,7 @@ const Banner = () => {
               <span>Browse Workouts</span>
 
               {/* Arrow Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                className="h-3.5 w-3.5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 12h14m-6-6 6 6-6 6"
-                />
-              </svg>
+              <FaArrowRightLong />
             </a>
           </div>
 

@@ -51,7 +51,7 @@ const Navbar = () => {
               className="object-contain"
             />
 
-            <span className="text-[15px] font-bold tracking-wide text-[#f2f3f5]">
+            <span className="text-[18px] font-bold tracking-wide text-[#f2f3f5]">
               FITLOG
             </span>
           </Link>

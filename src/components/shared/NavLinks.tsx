@@ -26,7 +26,7 @@ const NavLinks = ({ mobile = false }) => {
               ? isWorkoutsActive
                 ? "bg-[#172209] text-[#aaff00]"
                 : "text-[#777b83] hover:bg-[#15180f] hover:text-[#aaff00]"
-              : `min-h-0 h-8.5 rounded-full px-5 text-[12px] font-semibold transition-colors ${
+              : `min-h-0 h-8.5 rounded-full px-5 text-[14px] font-semibold transition-colors ${
                   isWorkoutsActive
                     ? "bg-[#172209] text-[#aaff00]"
                     : "bg-transparent text-[#777b83] hover:bg-transparent hover:text-[#aaff00]"
@@ -45,7 +45,7 @@ const NavLinks = ({ mobile = false }) => {
               ? isMyPlanActive
                 ? "bg-[#172209] text-[#aaff00]"
                 : "text-[#777b83] hover:bg-[#15180f] hover:text-[#aaff00]"
-              : `min-h-0 h-8.5 rounded-full px-5 text-[12px] font-semibold transition-colors ${
+              : `min-h-0 h-8.5 rounded-full px-5 text-[14px] font-semibold transition-colors ${
                   isMyPlanActive
                     ? "bg-[#172209] text-[#aaff00]"
                     : "bg-transparent text-[#777b83] hover:bg-transparent hover:text-[#aaff00]"

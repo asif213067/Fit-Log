@@ -32,7 +32,7 @@ const Banner = () => {
             {/* CTA */}
             <a
               href="#library"
-              className="mt-6 inline-flex h-9 items-center gap-2 rounded-md bg-[#aaff00] px-5 text-[10px] font-bold uppercase text-[#0b0d08] transition-colors duration-150 hover:bg-[#b9ff33] active:scale-105"
+              className="mt-6 inline-flex h-9 items-center gap-2 rounded-md bg-[#aaff00] px-5 text-[10px] font-bold uppercase text-[#0b0d08] transition-colors duration-150 hover:bg-[#b9ff33] active:scale-95"
             >
               <span>Browse Workouts</span>
 

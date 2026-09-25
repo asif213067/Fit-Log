@@ -1,13 +1,12 @@
 import React from 'react'
 import FitnessCard from '../shared/FitnessCard'
-import { error } from 'console';
 import { IFitness } from '@/type/fitness.type';
 
 const getWorkoutsData = async () => {
   const res = await fetch('https://api.abcz.workers.dev/api/fitlog');
   
   if(!res.ok) {
-    throw error ("Fiald to fetch data");
+    throw new Error('Failed to fetch workouts data!');
   }
 
   return res.json();

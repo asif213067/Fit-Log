@@ -1,115 +1,144 @@
 "use client";
 
-import { WorkoutsContext } from "@/context/WorkoutsContext";
 import React, { useContext, useState } from "react";
+
+import { WorkoutsContext } from "@/context/WorkoutsContext";
 import { IFitness } from "@/type/fitness.type";
+import { SortOption } from "@/type/WorkoutsContext.type";
+
+import PlanStats from "./PlanStats";
 import TodayPlanCard from "./TodayPlanCard";
 import TodayEmptyCard from "./TodayEmptyCard";
 import SavedCard from "./SavedCard";
 import SavedEmptyCard from "./SavedEmptyCard";
 
-type sortOptions = "duration" | "calories" | "rating";
+type ActiveTab = "today" | "saved";
 
 const MyPlanContent = () => {
   const context = useContext(WorkoutsContext);
 
   if (!context) {
-    throw new Error("AddBtn and SaveBtn must be used inside WorkoutsProvider");
+    throw new Error("Component must be used inside WorkoutsProvider");
   }
 
-  const { addToPlan, saved } = context;
+  const {
+    addToPlan,
+    saved,
+    sortedTodayPlan,
+    sortedSaved,
+    sortBy,
+    setSortBy,
+  } = context;
 
-  const [sortBy, setSortBy] = useState<sortOptions>("duration");
+  const [activeTab, setActiveTab] = useState<ActiveTab>("today");
 
-  const sortBooks = (workouts: IFitness[]) => {
-    const sortedWorkouts = [...workouts];
+  const activeWorkouts =
+    activeTab === "today" ? sortedTodayPlan : sortedSaved;
 
-    switch (sortBy) {
-      case "duration":
-        return sortedWorkouts.sort((a, b) => b.duration - a.duration);
+  return (
+    <section className="mt-8">
 
-      case "calories":
-        return sortedWorkouts.sort((a, b) => b.caloriesBurned - a.caloriesBurned);
+      {/* Stats */}
+      <PlanStats workouts={activeWorkouts} />
 
-      case "rating":
-        return sortedWorkouts.sort(
-          (a, b) => b.rating - a.rating,
-        );
+      {/* Tabs + Sort */}
+      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
-    }
-  };
+        {/* Tabs */}
+        <div className="flex w-fit rounded-lg border border-[#25282e] bg-[#111317] p-1">
 
-  const sortedTodayPlan = sortBooks(addToPlan);
-  const sortedSaved = sortBooks(saved);
+          <button
+            type="button"
+            onClick={() => setActiveTab("today")}
+            className={`rounded-md px-4 py-2 text-xs font-semibold transition-colors ${
+              activeTab === "today"
+                ? "bg-[#1d2229] text-white"
+                : "text-[#777b83] hover:text-white"
+            }`}
+          >
+            Today Plan ({addToPlan.length})
+          </button>
 
-  return <section className="mt-8">
-    {/* Sort By */}
-        <div className="mb-7 flex flex-row items-center justify-center gap-2">
+          <button
+            type="button"
+            onClick={() => setActiveTab("saved")}
+            className={`rounded-md px-4 py-2 text-xs font-semibold transition-colors ${
+              activeTab === "saved"
+                ? "bg-[#1d2229] text-white"
+                : "text-[#777b83] hover:text-white"
+            }`}
+          >
+            Saved ({saved.length})
+          </button>
+
+        </div>
+
+        {/* Sort */}
+        <div className="flex items-center gap-2">
           <label
-            htmlFor="book-sort"
-            className="text-sm font-semibold text-base-content/70"
+            htmlFor="workout-sort"
+            className="text-xs text-[#777b83]"
           >
             Sort By
           </label>
 
           <select
-            id="book-sort"
+            id="workout-sort"
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as sortOptions)}
-            className="select select-success w-full max-w-xs rounded-xl border-base-300 bg-base-100 font-medium shadow-sm"
+            onChange={(e) =>
+              setSortBy(e.target.value as SortOption)
+            }
+            className="h-8 rounded-lg border border-[#25282e] bg-[#111317] px-3 text-xs font-medium text-white outline-none focus:border-[#aaff00]"
           >
-            <option value="pages">Duration</option>
-            <option value="year">Calories</option>
+            <option value="duration">Duration</option>
+            <option value="calories">Calories</option>
             <option value="rating">Rating</option>
           </select>
         </div>
+      </div>
 
-        {/* Tabs */}
-        <div className="rounded-2xl border border-base-300 bg-base-100 p-3 shadow-sm sm:p-5">
-          <div className="tabs tabs-border w-full">
-            {/* Tody's Plan */}
-            <input
-              type="radio"
-              name="my_tabs_2"
-              className="tab text-sm font-semibold [--tab-border-color:white] checked:[--tab-border-color:var(--color-emerald-700)]"
-              aria-label={`Today's Plan (${addToPlan.length})`}
-            />
+      {/* Workout Content */}
+      <div className="mt-4 rounded-xl border border-dashed border-[#25282e] bg-[#0d0f12] p-4 sm:p-5">
 
-            <div className="tab-content border-base-300 bg-base-100 pt-6">
-              {sortedTodayPlan.length > 0 ? (
-                <div className="flex flex-col gap-4">
-                  {sortedTodayPlan.map((workout: IFitness) => (
-                    <TodayPlanCard key={workout.id} workout={workout} />
-                  ))}
-                </div>
-              ) : (
-                  <TodayEmptyCard />
-              )}
-            </div>
+        {/* Today's Plan */}
+        {activeTab === "today" && (
+          <>
+            {sortedTodayPlan.length > 0 ? (
+              <div className="flex flex-col gap-4">
+                {sortedTodayPlan.map((workout: IFitness) => (
+                  <TodayPlanCard
+                    key={workout.id}
+                    workout={workout}
+                  />
+                ))}
+              </div>
+            ) : (
+              <TodayEmptyCard />
+            )}
+          </>
+        )}
 
-            {/* Wishlist Books */}
-            <input
-              type="radio"
-              name="my_tabs_2"
-              className="tab text-sm font-semibold [--tab-border-color:white] checked:[--tab-border-color:var(--color-emerald-700)]"
-              aria-label={`Wishlist (${saved.length})`}
-              defaultChecked
-            />
+        {/* Saved */}
+        {activeTab === "saved" && (
+          <>
+            {sortedSaved.length > 0 ? (
+              <div className="flex flex-col gap-4">
+                {sortedSaved.map((workout: IFitness) => (
+                  <SavedCard
+                    key={workout.id}
+                    workout={workout}
+                  />
+                ))}
+              </div>
+            ) : (
+              <SavedEmptyCard />
+            )}
+          </>
+        )}
 
-            <div className="tab-content border-base-300 bg-base-100 pt-6">
-              {sortedSaved.length > 0 ? (
-                <div className="flex flex-col gap-4">
-                  {sortedSaved.map((workout: IFitness) => (
-                    <SavedCard key={workout.id} workout={workout} />
-                  ))}
-                </div>
-              ) : (
-                <SavedEmptyCard />
-              )}
-            </div>
-          </div>
-        </div>
-  </section>;
+      </div>
+    </section>
+  );
 };
 
 export default MyPlanContent;

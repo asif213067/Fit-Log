@@ -1,9 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 
+import { WorkoutsContext } from "@/context/WorkoutsContext";
+
 const SavedBtn = () => {
+  const context = useContext(WorkoutsContext);
+
+  if (!context) {
+    throw new Error("SavedBtn must be used inside WorkoutsProvider");
+  }
+
+  const { saved } = context;
+
   return (
     <Link
       href="/my-plan"
@@ -12,7 +22,7 @@ const SavedBtn = () => {
       <span>Saved</span>
 
       <span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-[#30333a] text-[12px] text-[#858991]">
-        0
+        {saved.length}
       </span>
     </Link>
   );

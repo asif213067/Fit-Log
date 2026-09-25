@@ -17,18 +17,19 @@ const SaveBtn = ({ workout }: SaveBtnProps) => {
     throw new Error("SaveBtn must be used inside WorkoutsProvider");
   }
 
-  const { setSaved } = context;
+  const { saved, setSaved } = context;
 
   const handleSaveBtn = () => {
-    setSaved((prevSaved: IFitness[]) => {
-      const alreadySaved = prevSaved.some((item) => item.id === workout.id);
-      if (alreadySaved) {
-        toast.info(`${workout.name} is already in Saved.`);
-        return prevSaved;
-      }
-      toast.success(`${workout.name} is added in Saved.`);
-      return [...prevSaved, workout];
-    });
+    const alreadySaved = saved.some((item) => item.id === workout.id);
+
+    if (alreadySaved) {
+      toast.info(`${workout.name} is already in Saved.`);
+      return;
+    }
+
+    setSaved((prevSaved) => [...prevSaved, workout]);
+
+    toast.success(`${workout.name} is added in Saved.`);
   };
 
   return (

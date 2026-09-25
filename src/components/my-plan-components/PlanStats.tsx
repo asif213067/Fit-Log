@@ -1,55 +1,61 @@
 "use client";
 
-import React, { useContext } from "react";
-import { WorkoutsContext } from "@/context/WorkoutsContext";
+import React from "react";
+import { IFitness } from "@/type/fitness.type";
 
+interface PlanStatsProps {
+  workouts: IFitness[];
+}
 
-const PlanStats = () => {
-  const context = useContext(WorkoutsContext);
-  
-    if (!context) {
-      throw new Error("AddBtn and SaveBtn must be used inside WorkoutsProvider");
-    }
-  
-    const {addToPlan, setAddToPlan, saved, setSaved} = context;
+const PlanStats = ({ workouts }: PlanStatsProps) => {
+  const exerciseCount = workouts.length;
+
+  const totalDuration = workouts.reduce(
+    (total, workout) => total + workout.duration,
+    0
+  );
+
+  const totalCalories = workouts.reduce(
+    (total, workout) => total + workout.caloriesBurned,
+    0
+  );
 
   return (
-    <div className="mt-6 grid grid-cols-3 gap-3">
-      <div className="rounded-xl border border-[#25282e] bg-[#111317] p-4">
-        <p className="text-xs uppercase tracking-wide text-[#7d828b]">
-          Exercise
+    <div className="grid grid-cols-3 overflow-hidden rounded-xl border border-[#25282e] bg-[#111317]">
+
+      {/* Exercises */}
+      <div className="border-r border-[#25282e] p-4 sm:p-5">
+        <p className="text-[10px] uppercase tracking-wide text-[#777b83] sm:text-xs">
+          Exercises
         </p>
 
-        <p className="mt-2 text-2xl font-bold text-white">
+        <p className="mt-1 text-2xl font-bold text-[#aaff00] sm:text-3xl">
           {exerciseCount}
         </p>
       </div>
 
-      <div className="rounded-xl border border-[#25282e] bg-[#111317] p-4">
-        <p className="text-xs uppercase tracking-wide text-[#7d828b]">
-          Duration
+      {/* Minutes */}
+      <div className="border-r border-[#25282e] p-4 sm:p-5">
+        <p className="text-[10px] uppercase tracking-wide text-[#777b83] sm:text-xs">
+          Minutes
         </p>
 
-        <p className="mt-2 text-2xl font-bold text-white">
+        <p className="mt-1 text-2xl font-bold text-white sm:text-3xl">
           {totalDuration}
-          <span className="ml-1 text-sm font-normal text-[#7d828b]">
-            min
-          </span>
         </p>
       </div>
 
-      <div className="rounded-xl border border-[#25282e] bg-[#111317] p-4">
-        <p className="text-xs uppercase tracking-wide text-[#7d828b]">
+      {/* Calories */}
+      <div className="p-4 sm:p-5">
+        <p className="text-[10px] uppercase tracking-wide text-[#777b83] sm:text-xs">
           Calories
         </p>
 
-        <p className="mt-2 text-2xl font-bold text-white">
+        <p className="mt-1 text-2xl font-bold text-white sm:text-3xl">
           {totalCalories}
-          <span className="ml-1 text-sm font-normal text-[#7d828b]">
-            kcal
-          </span>
         </p>
       </div>
+
     </div>
   );
 };

@@ -16,18 +16,19 @@ const AddBtn = ({ workout }: AddBtnProps) => {
     throw new Error("AddBtn must be used inside WorkoutsProvider");
   }
 
-  const { setAddToPlan } = context;
+  const { addToPlan, setAddToPlan } = context;
 
   const handleAddToPlan = () => {
-    setAddToPlan((prevTodayPlan: IFitness[]) => {
-      const alreadyInTodayPlan = prevTodayPlan.some((item) => item.id === workout.id);
-      if (alreadyInTodayPlan) {
-        toast.info(`${workout.name} is already in Today's Plan.`);
-        return prevTodayPlan;
-      }
-      toast.success(`${workout.name} is added in Today's Plan.`);
-      return [...prevTodayPlan, workout];
-    });
+    const alreadyInTodayPlan = addToPlan.some((item) => item.id === workout.id);
+
+    if (alreadyInTodayPlan) {
+      toast.info(`${workout.name} is already in Today's Plan.`);
+      return;
+    }
+
+    setAddToPlan((prevTodayPlan) => [...prevTodayPlan, workout]);
+
+    toast.success(`${workout.name} is added in Today's Plan.`);
   };
 
   return (

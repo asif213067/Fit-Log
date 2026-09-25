@@ -2,10 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { IFitness } from "@/type/fitness.type";
-import {
-  MdOutlineCalendarToday,
-  MdOutlineBookmarkBorder,
-} from "react-icons/md";
+import SaveBtn from "@/components/worksout-details-btn/SaveBtn";
+import AddBtn from "@/components/worksout-details-btn/AddBtn";
 
 interface WorkoutDetailsPageProps {
   params: Promise<{
@@ -153,15 +151,13 @@ const WorkoutDetailsPage = async ({ params }: WorkoutDetailsPageProps) => {
 
           {/* CTA Buttons */}
           <div className="mt-8 flex flex-wrap gap-3">
-            <button className="flex items-center gap-2 rounded-full bg-[#aaff00] px-5 py-2.5 text-sm font-bold text-[#0b0d08] transition hover:brightness-95 active:scale-95">
-              <MdOutlineCalendarToday size={18} />
-              Add to today&apos;s plan
-            </button>
+            {/* Add to today's plan Button */}
+            <div className="mt-6">
+              <AddBtn workout={workout} />
+            </div>
 
-            <button className="flex items-center gap-2 rounded-full border border-[#3a3e46] px-5 py-2.5 text-sm font-bold text-white transition hover:border-[#aaff00]/60 active:scale-95">
-              <MdOutlineBookmarkBorder size={18} />
-              Save for later
-            </button>
+            {/* Save for letter Button */}
+            <SaveBtn />
           </div>
         </div>
       </div>

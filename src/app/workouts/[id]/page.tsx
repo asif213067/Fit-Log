@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { IFitness } from "@/type/fitness.type";
 import SaveBtn from "@/components/worksout-details-btn/SaveBtn";
 import AddBtn from "@/components/worksout-details-btn/AddBtn";
+import SavedBtn from "@/components/nav-btn/SavedBtn";
 
 interface WorkoutDetailsPageProps {
   params: Promise<{
@@ -157,7 +158,9 @@ const WorkoutDetailsPage = async ({ params }: WorkoutDetailsPageProps) => {
             </div>
 
             {/* Save for letter Button */}
-            <SaveBtn />
+            <div className="mt-6">
+              <SaveBtn workout={workout} />
+            </div>
           </div>
         </div>
       </div>

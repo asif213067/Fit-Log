@@ -1,15 +1,9 @@
-import React from "react";
+import React from "react";;
 import MyPlanContent from "@/components/my-plan-components/MyPlanContent";
-import { IFitness } from "@/type/fitness.type";
 
 const MyPlanPage = async () => {
-  const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
+  
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch workout data");
-  }
-
-  const workouts: IFitness[] = await res.json();
 
   return (
     <main className="container mx-auto px-4 py-8 lg:px-8">
@@ -21,7 +15,7 @@ const MyPlanPage = async () => {
         Cap of five lifts for today. Finish them, then load more.
       </p>
 
-      <MyPlanContent workouts={workouts} />
+      <MyPlanContent />
     </main>
   );
 };

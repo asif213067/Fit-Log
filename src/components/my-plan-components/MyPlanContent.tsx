@@ -1,145 +1,115 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import { WorkoutsContext } from "@/context/WorkoutsContext";
+import React, { useContext, useState } from "react";
 import { IFitness } from "@/type/fitness.type";
-import FitnessCard from "@/components/shared/FitnessCard";
-import PlanTabs from "./PlanTabs";
-import SortDropdown from "./SortDropDown";
-import WorkoutsCard from "./WorkoutsCard";
+import TodayPlanCard from "./TodayPlanCard";
+import TodayEmptyCard from "./TodayEmptyCard";
+import SavedCard from "./SavedCard";
+import SavedEmptyCard from "./SavedEmptyCard";
 
+type sortOptions = "duration" | "calories" | "rating";
 
-interface MyPlanContentProps {
-  workouts: IFitness[];
-}
+const MyPlanContent = () => {
+  const context = useContext(WorkoutsContext);
 
-const MyPlanContent = ({ workouts }: MyPlanContentProps) => {
-  const [todayPlan, setTodayPlan] = useState<IFitness[]>([]);
-  const [activeTab, setActiveTab] = useState("Today's Plan");
-  const [sortBy, setSortBy] = useState("Duration");
+  if (!context) {
+    throw new Error("AddBtn and SaveBtn must be used inside WorkoutsProvider");
+  }
 
-  useEffect(() => {
-    const savedPlan = JSON.parse(
-      localStorage.getItem("todayPlan") || "[]"
-    );
+  const { addToPlan, saved } = context;
 
-    setTodayPlan(savedPlan);
-  }, []);
+  const [sortBy, setSortBy] = useState<sortOptions>("duration");
 
-  const totalCalories = useMemo(() => {
-    return todayPlan.reduce(
-      (total, workout) => total + workout.caloriesBurned,
-      0
-    );
-  }, [todayPlan]);
+  const sortBooks = (workouts: IFitness[]) => {
+    const sortedWorkouts = [...workouts];
 
-  const totalMinutes = useMemo(() => {
-    return todayPlan.reduce(
-      (total, workout) => total + workout.duration,
-      0
-    );
-  }, [todayPlan]);
+    switch (sortBy) {
+      case "duration":
+        return sortedWorkouts.sort((a, b) => b.duration - a.duration);
 
-  const totalDuration = todayPlan.length;
+      case "calories":
+        return sortedWorkouts.sort((a, b) => b.caloriesBurned - a.caloriesBurned);
 
-  const sortedWorkouts = [...todayPlan].sort((a, b) => {
-    if (sortBy === "Duration") {
-      return a.duration - b.duration;
+      case "rating":
+        return sortedWorkouts.sort(
+          (a, b) => b.rating - a.rating,
+        );
+
     }
+  };
 
-    if (sortBy === "Calories") {
-      return a.caloriesBurned - b.caloriesBurned;
-    }
+  const sortedTodayPlan = sortBooks(addToPlan);
+  const sortedSaved = sortBooks(saved);
 
-    if (sortBy === "Rating") {
-      return b.rating - a.rating;
-    }
+  return <section className="mt-8">
+    {/* Sort By */}
+        <div className="mb-7 flex flex-row items-center justify-center gap-2">
+          <label
+            htmlFor="book-sort"
+            className="text-sm font-semibold text-base-content/70"
+          >
+            Sort By
+          </label>
 
-    return 0;
-  });
-
-  return (
-    <section className="mt-8">
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-3">
-        <div className="rounded-xl border border-[#25282e] bg-[#111317] p-4">
-          <p className="text-[10px] uppercase tracking-wider text-[#777b83]">
-            Exercises
-          </p>
-
-          <p className="mt-1 text-2xl font-bold text-[#aaff00]">
-            {totalDuration}
-          </p>
+          <select
+            id="book-sort"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as sortOptions)}
+            className="select select-success w-full max-w-xs rounded-xl border-base-300 bg-base-100 font-medium shadow-sm"
+          >
+            <option value="pages">Duration</option>
+            <option value="year">Calories</option>
+            <option value="rating">Rating</option>
+          </select>
         </div>
 
-        <div className="rounded-xl border border-[#25282e] bg-[#111317] p-4">
-          <p className="text-[10px] uppercase tracking-wider text-[#777b83]">
-            Calories
-          </p>
+        {/* Tabs */}
+        <div className="rounded-2xl border border-base-300 bg-base-100 p-3 shadow-sm sm:p-5">
+          <div className="tabs tabs-border w-full">
+            {/* Tody's Plan */}
+            <input
+              type="radio"
+              name="my_tabs_2"
+              className="tab text-sm font-semibold [--tab-border-color:white] checked:[--tab-border-color:var(--color-emerald-700)]"
+              aria-label={`Today's Plan (${addToPlan.length})`}
+            />
 
-          <p className="mt-1 text-2xl font-bold text-white">
-            {totalCalories}
-          </p>
-        </div>
-
-        <div className="rounded-xl border border-[#25282e] bg-[#111317] p-4">
-          <p className="text-[10px] uppercase tracking-wider text-[#777b83]">
-            Minutes
-          </p>
-
-          <p className="mt-1 text-2xl font-bold text-white">
-            {totalMinutes}
-          </p>
-        </div>
-
-      </div>
-
-      {/* Tabs + Sort */}
-      <div className="mt-8 flex items-center justify-between gap-4 border-b border-[#25282e] pb-4">
-        <PlanTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-
-        <SortDropdown
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-        />
-      </div>
-
-      {/* Today's Plan */}
-      {activeTab === "Today's Plan" && (
-        <>
-          {sortedWorkouts.length > 0 ? (
-            <div className="mt-6 grid gap-5 sm:grid-cols-1 lg:grid-rows-1">
-              {sortedWorkouts.map((workout) => (
-                <WorkoutsCard
-                  key={workout.id}
-                  workout={workout}
-                />
-              ))}
+            <div className="tab-content border-base-300 bg-base-100 pt-6">
+              {sortedTodayPlan.length > 0 ? (
+                <div className="flex flex-col gap-4">
+                  {sortedTodayPlan.map((workout: IFitness) => (
+                    <TodayPlanCard key={workout.id} workout={workout} />
+                  ))}
+                </div>
+              ) : (
+                  <TodayEmptyCard />
+              )}
             </div>
-          ) : (
-            <div className="mt-10 rounded-2xl border border-[#25282e] bg-[#111317] px-6 py-16 text-center">
-              <h2 className="text-xl font-bold uppercase text-white">
-                No Workouts Yet
-              </h2>
 
-              <p className="mt-2 text-sm text-[#777b83]">
-                Add workouts to today&apos;s plan and they will appear here.
-              </p>
+            {/* Wishlist Books */}
+            <input
+              type="radio"
+              name="my_tabs_2"
+              className="tab text-sm font-semibold [--tab-border-color:white] checked:[--tab-border-color:var(--color-emerald-700)]"
+              aria-label={`Wishlist (${saved.length})`}
+              defaultChecked
+            />
 
-              <a
-                href="#library"
-                className="mt-6 inline-block rounded-full bg-[#aaff00] px-5 py-2.5 text-xs font-bold uppercase text-[#0b0d08]"
-              >
-                Browse Workouts
-              </a>
+            <div className="tab-content border-base-300 bg-base-100 pt-6">
+              {sortedSaved.length > 0 ? (
+                <div className="flex flex-col gap-4">
+                  {sortedSaved.map((workout: IFitness) => (
+                    <SavedCard key={workout.id} workout={workout} />
+                  ))}
+                </div>
+              ) : (
+                <SavedEmptyCard />
+              )}
             </div>
-          )}
-        </>
-      )}
-    </section>
-  );
+          </div>
+        </div>
+  </section>;
 };
 
 export default MyPlanContent;

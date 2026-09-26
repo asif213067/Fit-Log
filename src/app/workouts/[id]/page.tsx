@@ -14,31 +14,19 @@ interface WorkoutDetailsPageProps {
 const WorkoutDetailsPage = async ({ params }: WorkoutDetailsPageProps) => {
   const { id } = await params;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}`);
 
   if (!res.ok) {
-    notFound();
+    throw new Error("Failed to fetch workouts data!");
   }
 
-  const workout: IFitness = await res.json();
+  const workouts: IFitness[] = await res.json();
 
-  // const res = await fetch(
-  //   `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}`
-  // );
+  const workout = workouts.find((item) => item.id === Number(id));
 
-  // if (!res.ok) {
-  //   throw new Error("Failed to fetch workouts data!");
-  // }
-
-  // const workouts: IFitness[] = await res.json();
-
-  // const workout = workouts.find(
-  //   (item) => item.id === Number(id)
-  // );
-
-  // if (!workout) {
-  //   notFound();
-  // }
+  if (!workout) {
+    notFound();
+  }
 
   const {
     image,

@@ -6,9 +6,9 @@ The application focuses on a clean, dark, fitness-oriented interface with respon
 
 ## 🚀 Live Demo
 
-🔗 **Live Website:** [Add your live deployment URL here]
+🔗 **Live Website:** https://fit-log-by-asif.vercel.app/my-plan
 
-🔗 **GitHub Repository:** [Add your GitHub repository URL here]
+🔗 **GitHub Repository:** https://github.com/asif213067/Fit-Log
 
 ## 📌 About The Project
 

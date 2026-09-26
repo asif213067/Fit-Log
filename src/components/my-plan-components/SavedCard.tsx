@@ -36,93 +36,163 @@ const SavedCard = ({ workout }: SavedCardProps) => {
 
   const handleRemove = () => {
     setSaved((prevSaved) =>
-      prevSaved.filter((item) => item.id !== id)
+      prevSaved.filter((item) => item.id !== id),
     );
 
     toast.warning(`${name} removed from Saved.`);
   };
 
   return (
-    <article className="flex items-center gap-3 rounded-xl border border-[#1b1e23] bg-[#111317] p-2.5 transition-colors hover:border-[#2a2e35] sm:gap-4 sm:p-3">
-
-      {/* Image */}
-      <div className="relative h-14 w-24 shrink-0 overflow-hidden rounded-lg sm:h-14 sm:w-28">
-        <Image
-          src={image}
-          alt={name}
-          width={112}
-          height={56}
-          className="h-full w-full object-cover"
-        />
-      </div>
-
-      {/* Workout Info */}
-      <div className="min-w-0 flex-1">
-
-        {/* Name */}
-        <h3 className="truncate text-xs font-bold uppercase text-white sm:text-sm">
-          {name}
-        </h3>
-
-        {/* Muscle Group */}
-        <p className="mt-0.5 truncate text-[10px] text-[#777b83] sm:text-xs">
-          {muscleGroups.join(" · ")}
-        </p>
-
-        {/* Stats */}
-        <div className="mt-1.5 flex flex-wrap items-center gap-2.5 text-[10px] sm:gap-3 sm:text-xs">
-
-          {/* Duration */}
-          <span className="flex items-center gap-1 text-[#d4d7dc]">
-            <FiClock
-              className="text-[#aaff00]"
-              size={11}
+    <article className="rounded-xl border border-[#1b1e23] bg-[#111317] p-2.5 transition-colors hover:border-[#2a2e35] sm:flex sm:items-center sm:gap-4 sm:p-3">
+      {/* ================= MOBILE ONLY ================= */}
+      <div className="sm:hidden">
+        {/* Top: Image + Details */}
+        <div className="flex items-center gap-8">
+          {/* Image */}
+          <div className="relative h-16 w-24 shrink-0 overflow-hidden rounded-lg">
+            <Image
+              src={image}
+              alt={name}
+              width={150}
+              height={100}
+              className="h-full w-full object-cover"
             />
-            {duration} min
-          </span>
+          </div>
 
-          {/* Calories */}
-          <span className="flex items-center gap-1 text-[#d4d7dc]">
-            <MdLocalFireDepartment
-              className="text-[#aaff00]"
-              size={13}
-            />
-            {caloriesBurned} kcal
-          </span>
+          {/* Details */}
+          <div className="min-w-0 flex-1">
+            <h3 className="truncate text-xs font-bold uppercase text-white">
+              {name}
+            </h3>
 
-          {/* Rating */}
-          <span className="flex items-center gap-1 text-[#d4d7dc]">
-            <FaStar
-              className="text-[#aaff00]"
-              size={10}
-            />
-            {rating}
-          </span>
+            <p className="mt-0.5 truncate text-[10px] text-[#777b83]">
+              {muscleGroups.join(" · ")}
+            </p>
 
+            <div className="mt-1.5 flex items-center gap-2.5 text-[10px]">
+              {/* Duration */}
+              <span className="flex items-center gap-1 text-[#d4d7dc]">
+                <FiClock
+                  className="text-[#aaff00]"
+                  size={11}
+                />
+                {duration} min
+              </span>
+
+              {/* Calories */}
+              <span className="flex items-center gap-1 text-[#d4d7dc]">
+                <MdLocalFireDepartment
+                  className="text-[#aaff00]"
+                  size={13}
+                />
+                {caloriesBurned} kcal
+              </span>
+
+              {/* Rating */}
+              <span className="flex items-center gap-1 text-[#d4d7dc]">
+                <FaStar
+                  className="text-[#aaff00]"
+                  size={10}
+                />
+                {rating}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom: 2 Buttons */}
+        <div className="mt-3 grid grid-cols-2 gap-2 border-t border-[#1b1e23] pt-3">
+          {/* View Details */}
+          <Link
+            href={`/workouts/${id}`}
+            className="flex items-center justify-center rounded-full border border-[#30353d] px-2 py-2 text-[9px] font-medium text-[#d4d7dc] transition-colors hover:border-[#555b65] hover:text-white"
+          >
+            View Details
+          </Link>
+
+          {/* Remove */}
+          <button
+            type="button"
+            onClick={handleRemove}
+            aria-label={`Remove ${name} from Saved`}
+            className="flex items-center justify-center gap-1 rounded-full border border-[#30353d] px-2 py-2 text-[9px] font-medium text-[#d4d7dc] transition-colors hover:border-[#555b65] hover:text-white"
+          >
+            <FiX size={13} />
+            <span>Remove</span>
+          </button>
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex shrink-0 items-center gap-2">
+      {/* ================= DESKTOP / TABLET ================= */}
+      <div className="hidden flex-1 sm:flex sm:items-center sm:gap-4">
+        {/* Image */}
+        <div className="relative h-14 w-24 shrink-0 overflow-hidden rounded-lg sm:h-14 sm:w-28">
+          <Image
+            src={image}
+            alt={name}
+            width={112}
+            height={56}
+            className="h-full w-full object-cover"
+          />
+        </div>
 
-        {/* View Details */}
-        <Link
-          href={`/workouts/${id}`}
-          className="rounded-full border border-[#30353d] px-3.5 py-1.5 text-[10px] font-medium text-[#d4d7dc] transition-colors hover:border-[#555b65] hover:text-white"
-        >
-          View Details
-        </Link>
+        {/* Workout Info */}
+        <div className="min-w-0 flex-1">
+          <h3 className="truncate text-xs font-bold uppercase text-white sm:text-sm">
+            {name}
+          </h3>
 
-        {/* Remove */}
-        <button
-          type="button"
-          onClick={handleRemove}
-          aria-label={`Remove ${name} from saved`}
-          className="rounded-full p-1.5 text-[#777b83] transition-colors hover:bg-[#1b1e23] hover:text-white"
-        >
-          <FiX size={15} />
-        </button>
+          <p className="mt-0.5 truncate text-[10px] text-[#777b83] sm:text-xs">
+            {muscleGroups.join(" · ")}
+          </p>
 
+          <div className="mt-1.5 flex flex-wrap items-center gap-2.5 text-[10px] sm:gap-3 sm:text-xs">
+            <span className="flex items-center gap-1 text-[#d4d7dc]">
+              <FiClock
+                className="text-[#aaff00]"
+                size={11}
+              />
+              {duration} min
+            </span>
+
+            <span className="flex items-center gap-1 text-[#d4d7dc]">
+              <MdLocalFireDepartment
+                className="text-[#aaff00]"
+                size={13}
+              />
+              {caloriesBurned} kcal
+            </span>
+
+            <span className="flex items-center gap-1 text-[#d4d7dc]">
+              <FaStar
+                className="text-[#aaff00]"
+                size={10}
+              />
+              {rating}
+            </span>
+          </div>
+        </div>
+
+        {/* Desktop Actions */}
+        <div className="flex shrink-0 items-center gap-2">
+          {/* View Details */}
+          <Link
+            href={`/workouts/${id}`}
+            className="rounded-full border border-[#30353d] px-3.5 py-1.5 text-[10px] font-medium text-[#d4d7dc] transition-colors hover:border-[#555b65] hover:text-white"
+          >
+            View Details
+          </Link>
+
+          {/* Remove */}
+          <button
+            type="button"
+            onClick={handleRemove}
+            aria-label={`Remove ${name} from saved`}
+            className="rounded-full p-1.5 text-[#777b83] transition-colors hover:bg-[#1b1e23] hover:text-white"
+          >
+            <FiX size={15} />
+          </button>
+        </div>
       </div>
     </article>
   );

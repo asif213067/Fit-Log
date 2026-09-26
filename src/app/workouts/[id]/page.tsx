@@ -14,7 +14,7 @@ interface WorkoutDetailsPageProps {
 const WorkoutDetailsPage = async ({ params }: WorkoutDetailsPageProps) => {
   const { id } = await params;
 
-  const res = await fetch(`https://api.abcz.workers.dev/api/fitlog/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/${id}`);
 
   if (!res.ok) {
     notFound();
@@ -23,7 +23,7 @@ const WorkoutDetailsPage = async ({ params }: WorkoutDetailsPageProps) => {
   const workout: IFitness = await res.json();
 
   // const res = await fetch(
-  //   "https://api.abcz.workers.dev/api/fitlog"
+  //   `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}`
   // );
 
   // if (!res.ok) {

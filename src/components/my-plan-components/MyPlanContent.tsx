@@ -22,8 +22,6 @@ const MyPlanContent = () => {
   }
 
   const {
-    addToPlan,
-    saved,
     sortedTodayPlan,
     sortedSaved,
     sortBy,
@@ -45,7 +43,7 @@ const MyPlanContent = () => {
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
         {/* Tabs */}
-        <div className="flex w-fit rounded-lg border border-[#25282e] bg-[#111317] p-1">
+        <div className="flex w-fit rounded-lg border border-[#25282e] bg-[#111317] p-1 ">
 
           <button
             type="button"

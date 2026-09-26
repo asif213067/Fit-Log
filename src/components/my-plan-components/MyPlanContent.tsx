@@ -50,25 +50,25 @@ const MyPlanContent = () => {
           <button
             type="button"
             onClick={() => setActiveTab("today")}
-            className={`rounded-md px-4 py-2 text-xs font-semibold transition-colors ${
+            className={`rounded-md px-4 py-2 text-xs font-bold transition-colors ${
               activeTab === "today"
-                ? "bg-[#1d2229] text-white"
+                ? "bg-[#1d2229] text-[#aaff00]"
                 : "text-[#777b83] hover:text-white"
             }`}
           >
-            Today Plan ({addToPlan.length})
+            Today&apos;s Plan
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab("saved")}
-            className={`rounded-md px-4 py-2 text-xs font-semibold transition-colors ${
+            className={`rounded-md px-4 py-2 text-xs font-bold transition-colors ${
               activeTab === "saved"
-                ? "bg-[#1d2229] text-white"
+                ? "bg-[#1d2229] text-[#aaff00]"
                 : "text-[#777b83] hover:text-white"
             }`}
           >
-            Saved ({saved.length})
+            Saved
           </button>
 
         </div>

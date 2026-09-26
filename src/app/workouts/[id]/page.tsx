@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { IFitness } from "@/type/fitness.type";
 import SaveBtn from "@/components/worksout-details-btn/SaveBtn";
 import AddBtn from "@/components/worksout-details-btn/AddBtn";
-import SavedBtn from "@/components/nav-btn/SavedBtn";
 
 interface WorkoutDetailsPageProps {
   params: Promise<{
@@ -22,6 +21,24 @@ const WorkoutDetailsPage = async ({ params }: WorkoutDetailsPageProps) => {
   }
 
   const workout: IFitness = await res.json();
+
+  // const res = await fetch(
+  //   "https://api.abcz.workers.dev/api/fitlog"
+  // );
+
+  // if (!res.ok) {
+  //   throw new Error("Failed to fetch workouts data!");
+  // }
+
+  // const workouts: IFitness[] = await res.json();
+
+  // const workout = workouts.find(
+  //   (item) => item.id === Number(id)
+  // );
+
+  // if (!workout) {
+  //   notFound();
+  // }
 
   const {
     image,

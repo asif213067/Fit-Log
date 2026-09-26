@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 
 import { IFitness } from "@/type/fitness.type";
 import { SortOption, WorkoutsContextType } from "@/type/WorkoutsContext.type";
@@ -11,8 +11,40 @@ const WorkoutsProvider = ({ children }: { children: ReactNode }) => {
   const [addToPlan, setAddToPlan] = useState<IFitness[]>([]);
   const [saved, setSaved] = useState<IFitness[]>([]);
 
-  // Default sorting
   const [sortBy, setSortBy] = useState<SortOption>("duration");
+
+  // Check whether localStorage has been loaded
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Load data from localStorage
+  useEffect(() => {
+    const storedPlan = localStorage.getItem("fitlog-plan");
+    const storedSaved = localStorage.getItem("fitlog-saved");
+
+    if (storedPlan) {
+      setAddToPlan(JSON.parse(storedPlan));
+    }
+
+    if (storedSaved) {
+      setSaved(JSON.parse(storedSaved));
+    }
+
+    setIsHydrated(true);
+  }, []);
+
+  // Save today's plan
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    localStorage.setItem("fitlog-plan", JSON.stringify(addToPlan));
+  }, [addToPlan, isHydrated]);
+
+  // Save saved workouts
+  useEffect(() => {
+    if (!isHydrated) return;
+
+    localStorage.setItem("fitlog-saved", JSON.stringify(saved));
+  }, [saved, isHydrated]);
 
   const sortWorkouts = (workouts: IFitness[]): IFitness[] => {
     const sortedWorkouts = [...workouts];
@@ -34,7 +66,7 @@ const WorkoutsProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const sortedTodayPlan = sortWorkouts(addToPlan)
+  const sortedTodayPlan = sortWorkouts(addToPlan);
 
   const sortedSaved = sortWorkouts(saved);
 

@@ -21,7 +21,7 @@ const SavedBtn = () => {
     >
       <span>Saved</span>
 
-      <span className="flex h-4 min-w-4 items-center justify-center rounded-full border border-[#30333a] text-[12px] text-[#858991]">
+      <span className="flex h-4 min-w-4 items-center justify-center px-1 rounded-full border border-[#30333a] text-[12px] font-bold text-white">
         {saved.length}
       </span>
     </Link>

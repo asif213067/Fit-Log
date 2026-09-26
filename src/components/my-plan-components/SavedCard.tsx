@@ -39,7 +39,7 @@ const SavedCard = ({ workout }: SavedCardProps) => {
       prevSaved.filter((item) => item.id !== id)
     );
 
-    toast.success(`${name} removed from Saved.`);
+    toast.warning(`${name} removed from Saved.`);
   };
 
   return (

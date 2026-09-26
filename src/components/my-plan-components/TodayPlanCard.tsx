@@ -32,7 +32,15 @@ const TodayPlanCard = ({ workout }: TodayPlanCardProps) => {
       prevTodayPlan.filter((item) => item.id !== id),
     );
 
-    toast.success(`${name} removed from Today's Plan.`);
+    toast.warning(`${name} removed from Today's Plan.`);
+  };
+
+  const handleMarkDone = () => {
+    setAddToPlan((prevTodayPlan) =>
+      prevTodayPlan.filter((item) => item.id !== id),
+    );
+
+    toast.success(`${name} is completed!`);
   };
 
   return (
@@ -89,6 +97,8 @@ const TodayPlanCard = ({ workout }: TodayPlanCardProps) => {
         {/* Mark as Done */}
         <button
           type="button"
+          onClick={handleMarkDone}
+          aria-label={`Mark Done and Remove ${name} from Today's Plan`}
           className="flex items-center gap-1.5 rounded-full bg-[#aaff00] px-3.5 py-1.5 text-[10px] font-bold text-[#0b0d08] transition-transform hover:scale-105 active:scale-95"
         >
           <MdCheck size={12} />

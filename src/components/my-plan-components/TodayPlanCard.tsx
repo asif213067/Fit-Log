@@ -107,7 +107,7 @@ const TodayPlanCard = ({ workout }: TodayPlanCardProps) => {
             className="flex items-center justify-center gap-1 rounded-full bg-[#aaff00] px-2 py-2 text-[9px] font-bold text-[#0b0d08] transition-transform hover:scale-105 active:scale-95"
           >
             <MdCheck size={12} />
-            <span>Mark as Done</span>
+            <span>Done</span>
           </button>
 
           {/* Remove */}

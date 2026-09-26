@@ -158,12 +158,12 @@ const WorkoutDetailsPage = async ({ params }: WorkoutDetailsPageProps) => {
           {/* CTA Buttons */}
           <div className="mt-8 flex flex-wrap gap-3">
             {/* Add to today's plan Button */}
-            <div className="mt-6">
+            <div className="flex-1 sm:flex-none">
               <AddBtn workout={workout} />
             </div>
 
             {/* Save for letter Button */}
-            <div className="mt-6">
+            <div className="flex-1 sm:flex-none">
               <SaveBtn workout={workout} />
             </div>
           </div>

@@ -35,9 +35,9 @@ const SaveBtn = ({ workout }: SaveBtnProps) => {
   return (
     <button
       onClick={() => handleSaveBtn()}
-      className="flex items-center gap-2 rounded-full border border-[#3a3e46] px-5 py-2.5 text-sm font-bold text-white transition hover:border-[#aaff00]/60 active:scale-95"
+      className="flex w-full items-center justify-center gap-1.5 rounded-full border border-[#3a3e46] px-3 py-2 text-[11px] font-bold text-white transition hover:border-[#aaff00]/60 active:scale-95 sm:w-auto sm:gap-2 sm:px-5 sm:py-2.5 sm:text-sm"
     >
-      <MdOutlineBookmarkBorder size={18} />
+      <MdOutlineBookmarkBorder size={16} className="sm:size-4.5" />
       Save for later
     </button>
   );

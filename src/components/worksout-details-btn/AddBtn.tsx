@@ -43,13 +43,13 @@ const AddBtn = ({ workout }: AddBtnProps) => {
     <button
       onClick={() => handleAddToPlan()}
       disabled={isPlanFull}
-      className={`flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition ${
+      className={`flex items-center gap-1.5 rounded-full px-3 py-2 text-[11px] font-bold transition sm:gap-2 sm:px-5 sm:py-2.5 sm:text-sm ${
         isPlanFull
           ? "cursor-not-allowed bg-[#25282e] text-[#777b83]"
           : "bg-[#aaff00] text-[#0b0d08] hover:brightness-95 active:scale-95"
       }`}
     >
-      <MdOutlineCalendarToday size={18} />
+      <MdOutlineCalendarToday size={16} className="sm:size-4.5" />
       {isPlanFull ? "Today's plan is full" : "Add to today's plan"}
     </button>
   );
